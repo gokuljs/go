@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/gokuljs/greetings"
+	"github.com/gokuljs/go/greetings"
 )
 
 func main() {

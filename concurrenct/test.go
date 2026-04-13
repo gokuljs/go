@@ -25,6 +25,7 @@ func generateOrders(count int) []*Orders {
 }
 
 func processOrders(orders []*Orders) {
+	fmt.Println("Processing orders")
 	length := len(orders)
 	for i := 0; i < length; i++ {
 		time.Sleep(time.Duration(rand.Intn(500)) * time.Millisecond)
@@ -33,6 +34,7 @@ func processOrders(orders []*Orders) {
 }
 
 func updateOrderStatus(orders []*Orders) {
+	fmt.Println("Updating order status")
 	for _, order := range orders {
 		time.Sleep(
 			time.Duration(rand.Intn(300) * int(time.Millisecond)),
@@ -46,6 +48,7 @@ func updateOrderStatus(orders []*Orders) {
 }
 
 func reportOrderStatuses(orders []*Orders) {
+	fmt.Println("reporting order status")
 	for _, order := range orders {
 		time.Sleep(1 * time.Millisecond)
 		fmt.Printf("Print order status of id %v = %v\n", order.Id, order.Status)
@@ -56,4 +59,7 @@ func main() {
 	fmt.Println("Concurrency method in go")
 	orders := generateOrders(10)
 	processOrders(orders)
+	updateOrderStatus(orders)
+	reportOrderStatuses(orders)
+	fmt.Println("All operations completed")
 }

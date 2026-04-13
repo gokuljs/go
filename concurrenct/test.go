@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+	"time"
+)
 
 type Orders struct {
 	Id     int
@@ -23,7 +27,28 @@ func generateOrders(count int) []*Orders {
 func processOrders(orders []*Orders) {
 	length := len(orders)
 	for i := 0; i < length; i++ {
-		fmt.Println("Order of %v is %v", i+1, orders[i])
+		time.Sleep(time.Duration(rand.Intn(500)) * time.Millisecond)
+		fmt.Printf("Order of %v is %v\n", i+1, orders[i])
+	}
+}
+
+func updateOrderStatus(orders []*Orders) {
+	for _, order := range orders {
+		time.Sleep(
+			time.Duration(rand.Intn(300) * int(time.Millisecond)),
+		)
+		status := []string{
+			"Processing", "Shipped", "Delivered",
+		}[rand.Intn(3)]
+		order.Status = status
+		fmt.Printf("update status of orderid %v to status of %v\n", order.Id, order.Status)
+	}
+}
+
+func reportOrderStatuses(orders []*Orders) {
+	for _, order := range orders {
+		time.Sleep(1 * time.Millisecond)
+		fmt.Printf("Print order status of id %v = %v\n", order.Id, order.Status)
 	}
 }
 

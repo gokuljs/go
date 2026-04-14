@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"sync"
 	"time"
 )
 
@@ -56,10 +57,22 @@ func reportOrderStatuses(orders []*Orders) {
 }
 
 func main() {
+	wg := sync.WaitGroup{}
+	wg.Add(3)
 	fmt.Println("Concurrency method in go")
 	orders := generateOrders(10)
-	processOrders(orders)
-	updateOrderStatus(orders)
-	reportOrderStatuses(orders)
+	go func() {
+		defer wg.Done()
+		processOrders(orders)
+	}()
+	go func() {
+		defer wg.Done()
+		updateOrderStatus(orders)
+	}()
+	go func() {
+		defer wg.Done()
+		reportOrderStatuses(orders)
+	}()
+	wg.Wait()
 	fmt.Println("All operations completed")
 }
